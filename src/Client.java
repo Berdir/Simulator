@@ -10,7 +10,7 @@ public class Client
 		InetAddress adress = Inet4Address.getByName("127.0.0.1");
 		System.out.println("client startet..");
 		
-		DatagramSocket socket = new DatagramSocket();
+		DatagramSocket socket = new DatagramSocket(4321);
 		DatagramPacket packet = new DatagramPacket(new byte[]{65,66,67,68}, 4, adress, 1234);
 		socket.send(packet);
 		

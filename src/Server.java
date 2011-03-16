@@ -20,8 +20,9 @@ public class Server
 			
 			//antwort
 			InetSocketAddress address = (InetSocketAddress)packet.getSocketAddress();
-			System.out.println("von: "+address.getAddress());
-			int port = packet.getPort();
+			int port = address.getPort();
+			System.out.println("von: "+address);
+			
 			byte[] answBuf = "ACK".getBytes();
 			DatagramPacket answPacket = new DatagramPacket(answBuf, answBuf.length, address.getAddress(), port);
 			socket.send(answPacket);
