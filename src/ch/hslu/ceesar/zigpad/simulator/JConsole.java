@@ -15,9 +15,9 @@ public class JConsole extends JFrame
     LinkedList<Integer> keyBuffer = new LinkedList<Integer>();
     boolean startReading = false;
 
-    public JConsole()
+    public JConsole(String description)
     {
-        super("System Console");
+        super(description);
         add(textfeld);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(500, 300));
@@ -99,7 +99,7 @@ public class JConsole extends JFrame
 
     public static void main(String[] args)
     {
-        JConsole cons = new JConsole();
+        JConsole cons = new JConsole("System Console");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Console mit üהצ-Support (korrekte Funktion nur ausserhalb der IDE)");
        

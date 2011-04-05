@@ -3,15 +3,23 @@ package ch.hslu.ceesar.zigpad.simulator;
 import java.net.*;
 import java.io.*;
 
-public class Server
+public class Server implements Runnable
 {
-	DatagramSocket socket = new DatagramSocket(1234);
+	public String answer = "ACK";
+	public int port = 1234;
+	
 
-	Server() throws IOException 
+	Server() 
 	{ 
+
+	}
+	
+	public void startServer() throws IOException
+	{
 		System.out.println("server started..");
 		while (true)
 		{
+			DatagramSocket socket = new DatagramSocket(port);
 			byte[] buf = new byte[256];
 			DatagramPacket packet = new DatagramPacket(buf, buf.length);
 			socket.receive(packet);
@@ -24,23 +32,33 @@ public class Server
 			int port = address.getPort();
 			System.out.println("von: "+address);
 			
-			byte[] answBuf = "ACK".getBytes();
+			byte[] answBuf = answer.getBytes();
 			DatagramPacket answPacket = new DatagramPacket(answBuf, answBuf.length, address.getAddress(), port);
 			socket.send(answPacket);
 			System.out.println("Antwort gesendet");
-
-
-
-		}
+			socket.close();
+		}		
 	}
 
 	public static void main (String[] args) 
 	{
-		try
-		{
-			Server server = new Server();
-		} catch (IOException e) { 
-			System.out.print(e);
+		new JConsole("Server");
+		Server server = new Server();
+		try {
+			server.startServer();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
 		}
+	}
+
+	@Override
+	public void run(){
+		try {
+			startServer();
+		} catch (IOException e) {
+			System.out.print(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		}
+
 	}
 }
